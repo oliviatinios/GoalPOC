@@ -15,8 +15,6 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion"
     compile("org.springframework.hateoas:spring-hateoas:$springHateoasVersion")
     
-    compile files('C:/Users/phana/.m2/repository/com/cibc/dgp/commoncore/dgp-commoncore/0.0.1-SNAPSHOT/dgp-commoncore-0.0.1-SNAPSHOT.jar')
-    
     
     testCompile project(":test-utils")
 }
