@@ -1,0 +1,11 @@
+apply plugin: 'java'
+
+dependencies {
+    compile "io.eventuate.client.java:eventuate-client-java-spring:$eventuateClientVersion"
+    compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+    compile("org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion")
+   
+    compile files('C:/Users/phana/.m2/repository/com/cibc/dgp/commoncore/dgp-commoncore/0.0.1-SNAPSHOT/dgp-commoncore-0.0.1-SNAPSHOT.jar')
+
+    testCompile 'junit:junit:4.12'
+}

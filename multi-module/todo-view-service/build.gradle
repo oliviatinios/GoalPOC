@@ -1,0 +1,21 @@
+apply plugin: VerifyEventStoreEnvironmentPlugin
+apply plugin: EventuateDependencyPlugin
+apply plugin: 'spring-boot'
+
+dependencies {
+    compile project(":common")
+    compile project(":common-hateoas")
+    compile project(":common-swagger")
+
+    compile 'mysql:mysql-connector-java:5.1.36'
+
+    compile("org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
+    compile "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion"
+    compile("org.springframework.hateoas:spring-hateoas:$springHateoasVersion")
+    
+    compile files('C:/Users/phana/.m2/repository/com/cibc/dgp/commoncore/dgp-commoncore/0.0.1-SNAPSHOT/dgp-commoncore-0.0.1-SNAPSHOT.jar')
+    
+
+    testCompile project(":test-utils")
+}
