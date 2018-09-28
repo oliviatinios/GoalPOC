@@ -2,7 +2,11 @@ package net.chrisrichardson.eventstore.examples.todolist.hateoas;
 
 import net.chrisrichardson.eventstore.examples.todolist.common.controller.BaseController;
 import net.chrisrichardson.eventstore.examples.todolist.common.model.ResourceWithUrl;
+import net.chrisrichardson.eventstore.examples.todolist.model.Client;
 import net.chrisrichardson.eventstore.examples.todolist.model.Goal;
+import net.chrisrichardson.eventstore.examples.todolist.model.GoalInfo;
+import net.chrisrichardson.eventstore.examples.todolist.model.SaveForAnythingDetails;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,9 +35,48 @@ public class TodoHateoasController extends BaseController {
 
     public ResourceWithUrl toResource(Goal todo) {
         ResourceWithUrl<Goal> result = new ResourceWithUrl<>(todo);
-        if (todo != null) {
+        Goal goal = result.getContent();
+        
+        GoalInfo goalInfo = new GoalInfo();
+        goalInfo.setCreateBy(goal.getCreateBy());
+        goalInfo.setCreateOn(goal.getCreateOn());
+        goalInfo.setGoalId(goal.getGoalId());
+        goalInfo.setGoalName(goal.getGoalName());
+        goalInfo.setGoalStatusCode(goal.getGoalStatusCode());
+        goalInfo.setGoalSubtypeCode(goal.getGoalSubtypeCode());
+        goalInfo.setGoalTypeCode(goal.getGoalTypeCode());
+        goalInfo.setModifiedBy(goal.getModifiedBy());
+        goalInfo.setModifiedOn(goal.getModifiedOn());
+        goalInfo.setNote(goal.getNote());
+        
+        Client primaryClient = new Client();
+        primaryClient.setClientXRefId(goal.getClientXRefId());
+        goalInfo.setPrimaryClient(primaryClient);
+
+        SaveForAnythingDetails saveForAnythingDetails = new SaveForAnythingDetails();
+        saveForAnythingDetails.setCompleteDate(goal.getCompleteDate());
+        saveForAnythingDetails.setCost(goal.getCost());
+        saveForAnythingDetails.setCostFrequencyCode(goal.getCostFrequencyCode());
+        saveForAnythingDetails.setCostTimeValue(goal.getCostTimeValue());
+        saveForAnythingDetails.setCurrencyCode(goal.getCurrencyCode());
+        saveForAnythingDetails.setInvestmentPropertyInd(goal.getInvestmentPropertyInd());
+        saveForAnythingDetails.setOwnedHomeCanadaInd(goal.getOwnedHomeCanadaInd());
+        saveForAnythingDetails.setRecurrence(goal.getRecurrence());
+        saveForAnythingDetails.setStartDate(goal.getStartDate());
+        saveForAnythingDetails.setTargetDateCode(goal.getTargetDateCode());
+        goalInfo.setSaveForAnythingDetails(saveForAnythingDetails);
+
+        ResourceWithUrl<GoalInfo> result2 = new ResourceWithUrl<>(goalInfo);
+        
+        
+        /*if (todo != null) {
             result.setUrl(linkTo(methodOn(TodoHateoasController.class).getTodo(todo.getGoalId())).withSelfRel().getHref());
+        }*/
+
+        if (todo != null) {
+        	result2.setUrl(linkTo(methodOn(TodoHateoasController.class).getTodo(goalInfo.getGoalId())).withSelfRel().getHref());
         }
-        return result;
+
+        return result2;
     }
 }
