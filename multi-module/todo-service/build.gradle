@@ -17,3 +17,7 @@ dependencies {
     
     testCompile project(":test-utils")
 }
+
+springBoot {
+    mainClass = 'poc.eventstore.examples.todolist.todoservice.TodoServiceMain'
+}
