@@ -1,11 +1,11 @@
 commandsideservice:
-  build: ./todo-service/
+  build: ./goal-service/
   restart: unless-stopped
   ports:
     - "8081:8080"
 
 querysideservice:
-  build: ./todo-view-service/
+  build: ./goal-view-service/
   restart: unless-stopped
   ports:
     - "8082:8080"
