@@ -19,45 +19,41 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class GoalHttpClient {
+public class GoalHttpClientViewAll {
 
 	//private final String USER_AGENT = "Mozilla/5.0";
 
 	public static void main(String[] args) throws Exception {
 
-		GoalHttpClient http = new GoalHttpClient();
+		GoalHttpClientViewAll http = new GoalHttpClientViewAll();
 
-		// Save a goal
-		System.out.println("/************************************ TEST 1 - ADD A GOAL ************************************/");
-		JSONObject result = http.sendPost("Goal1", "Bob");
-		String goal_id = result.getString("id");
+		// Save goals
+		System.out.println("/************************************ TEST 1 - ADD GOALS ************************************/");
+		System.out.println("\nADDING GOAL1");
+		http.sendPost("GOAL1", "Bob");
+		System.out.println("\nADDING GOAL2");
+		http.sendPost("GOAL2", "Jim");
+		System.out.println("\nADDING GOAL3");
+		http.sendPost("GOAL3", "Steve");
 		
 		Thread.sleep(50);
 		
-		// Get goal by id
-		System.out.println("\n\n\n/************************************ TEST 2 - VIEW GOAL ************************************/");
-		http.sendGet(goal_id);
-		
-		// Update goal
-		System.out.println("\n\n\n/************************************ TEST 3 - UPDATE GOAL ************************************/");
-		http.sendPatch("GOAL1-UPDATED", "Bob", goal_id);
+		// Get all goals
+		System.out.println("\n\n\n/************************************ TEST 2 - VIEW ALL GOALS ************************************/");
+		http.sendGet();
 
-		Thread.sleep(50);
-		
-		// Get updated goal by id
-		System.out.println("\n\n\n/************************************ TEST 4 - VIEW UPDATED GOAL ************************************/");
-		http.sendGet(goal_id);
-		
-		// Delete goal by id
-		System.out.println("\n\n\n/************************************ TEST 5 - DELETE GOAL ************************************/");
-		http.sendDelete(goal_id);
+		//Thread.sleep(50);
+	
+		// Delete all goals
+		System.out.println("\n\n\n/************************************ TEST 3 - DELETE ALL GOALS ************************************/");
+		http.sendDelete();
 		
 	}
 
-	// HTTP GET request - get goal by id
-	private void sendGet(String id) throws Exception {
+	// HTTP GET request - get all goals
+	private void sendGet() throws Exception {
 
-		String url = "http://192.168.20.105:8082/goal/" + id;
+		String url = "http://192.168.20.105:8082/goals";
 
 		HttpClient client = HttpClientBuilder.create().build();
 
@@ -79,16 +75,15 @@ public class GoalHttpClient {
 			result.append(line);
 		}
 
-		System.out.println("Response :\n" + new JSONObject(result.toString()).toString(2));
-		//System.out.println("Goal Name : " + new JSONObject(result.toString()).getString("goalName"));
+		System.out.println("Response :\n" + new JSONArray(result.toString()).toString(2));
 		
 		
 	}
 	
-	// HTTP DELETE request - delete goal by id
-		private void sendDelete(String id) throws Exception {
+	// HTTP DELETE request - delete all goals
+		private void sendDelete() throws Exception {
 
-			String url = "http://192.168.20.105:8081/goal/" + id;
+			String url = "http://192.168.20.105:8081/goal";
 
 			HttpClient client = HttpClientBuilder.create().build();
 
@@ -109,8 +104,6 @@ public class GoalHttpClient {
 			while ((line = rd.readLine()) != null) {
 				result.append(line);
 			}
-
-			System.out.println("Response : " + result.toString());
 			
 			
 		}
@@ -259,3 +252,4 @@ public class GoalHttpClient {
 		}
 
 }
+
